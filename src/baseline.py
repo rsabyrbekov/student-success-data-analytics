@@ -58,8 +58,9 @@ def main() -> None:
     _, results, metrics = train_baseline(pd.read_csv(args.data), seed=args.seed)
     print(pd.Series(metrics).to_string())
     for column in SENSITIVE_COLUMNS:
+        table = subgroup_metrics(results, column, TARGET, "prediction")
         print(
-            f"\n{column}\n{subgroup_metrics(results, column, TARGET, 'prediction').to_string(index=False)}"
+            f"\n{column}\n{table.to_string(index=False)}"
         )
 
 

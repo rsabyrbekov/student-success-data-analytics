@@ -71,7 +71,8 @@ def validate_student_data(data: pd.DataFrame, *, minimum_rows: int = 20) -> Qual
             or (high is not None and (numeric > high).any())
         ):
             errors.append(
-                f"{column} contains values outside [{low}, {high if high is not None else 'unbounded'}]"
+                f"{column} contains values outside "
+                f"[{low}, {high if high is not None else 'unbounded'}]"
             )
     if len(data) and data["persisted_next_term"].mean() in (0, 1):
         warnings.append("target contains only one class; model evaluation is not meaningful")
