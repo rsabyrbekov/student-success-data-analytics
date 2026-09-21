@@ -11,6 +11,7 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
 from .evaluation import classification_metrics, subgroup_metrics
+from .data_quality import assert_valid_student_data
 
 TARGET = "persisted_next_term"
 SENSITIVE_COLUMNS = ["first_generation", "financial_aid", "online_student", "age_band"]
@@ -18,6 +19,7 @@ SENSITIVE_COLUMNS = ["first_generation", "financial_aid", "online_student", "age
 
 def train_baseline(data: pd.DataFrame, seed: int = 42) -> tuple[Pipeline, pd.DataFrame, dict[str, float]]:
     """Fit the baseline and return it, test predictions, and metrics."""
+    assert_valid_student_data(data)
     features = data.drop(columns=[TARGET, "student_id"])
     X_train, X_test, y_train, y_test = train_test_split(
         features, data[TARGET], test_size=0.25, random_state=seed, stratify=data[TARGET]
@@ -49,8 +51,9 @@ def train_baseline(data: pd.DataFrame, seed: int = 42) -> tuple[Pipeline, pd.Dat
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--data", type=Path, required=True)
+    parser.add_argument("--seed", type=int, default=42)
     args = parser.parse_args()
-    _, results, metrics = train_baseline(pd.read_csv(args.data))
+    _, results, metrics = train_baseline(pd.read_csv(args.data), seed=args.seed)
     print(pd.Series(metrics).to_string())
     for column in SENSITIVE_COLUMNS:
         print(f"\n{column}\n{subgroup_metrics(results, column, TARGET, 'prediction').to_string(index=False)}")

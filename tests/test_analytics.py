@@ -2,6 +2,8 @@ import pandas as pd
 
 from src.baseline import train_baseline
 from src.evaluation import demographic_parity_difference, subgroup_metrics
+from src.data_quality import validate_student_data
+from src.report import generate_report
 from src.generate_data import generate_student_data
 
 
@@ -20,3 +22,13 @@ def test_baseline_metrics_and_fairness_table():
     table = subgroup_metrics(results, "first_generation", "persisted_next_term", "prediction")
     assert set(table["group"]) == {"0", "1"}
     assert 0 <= demographic_parity_difference(table) <= 1
+
+
+def test_quality_checks_and_report(tmp_path):
+    data = generate_student_data(100)
+    assert validate_student_data(data).valid
+    path = tmp_path / "data.csv"
+    data.to_csv(path, index=False)
+    report = generate_report(path, tmp_path / "report")
+    assert report.exists()
+    assert '"false_positive_rate_difference"' in report.read_text()

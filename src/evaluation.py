@@ -46,6 +46,10 @@ def subgroup_metrics(
                         zero_division=0,
                     )
                 ),
+                "false_positive_rate": float(
+                    ((subset[target_column] == 0) & (subset[prediction_column] == 1)).sum()
+                    / max((subset[target_column] == 0).sum(), 1)
+                ),
             }
         )
     return pd.DataFrame(rows)
@@ -54,3 +58,14 @@ def subgroup_metrics(
 def demographic_parity_difference(metrics: pd.DataFrame) -> float:
     """Difference between the largest and smallest subgroup selection rates."""
     return float(metrics["predicted_positive_rate"].max() - metrics["predicted_positive_rate"].min())
+
+
+def fairness_summary(metrics: pd.DataFrame) -> dict[str, float]:
+    """Return disparities used as screening diagnostics."""
+    return {
+        "demographic_parity_difference": demographic_parity_difference(metrics),
+        "equal_opportunity_difference": float(metrics["recall"].max() - metrics["recall"].min()),
+        "false_positive_rate_difference": float(
+            metrics["false_positive_rate"].max() - metrics["false_positive_rate"].min()
+        ),
+    }

@@ -1,0 +1,41 @@
+{
+  "data": "data\\synthetic\\student_success.csv",
+  "fairness": {
+    "age_band": {
+      "demographic_parity_difference": 0.0793103448275862,
+      "equal_opportunity_difference": 0.65625,
+      "false_positive_rate_difference": 0.28409090909090906
+    },
+    "financial_aid": {
+      "demographic_parity_difference": 0.1948717948717949,
+      "equal_opportunity_difference": 0.13343328335832083,
+      "false_positive_rate_difference": 0.19744744744744747
+    },
+    "first_generation": {
+      "demographic_parity_difference": 0.40138888888888885,
+      "equal_opportunity_difference": 0.46306306306306305,
+      "false_positive_rate_difference": 0.2922480620155039
+    },
+    "online_student": {
+      "demographic_parity_difference": 0.20646625070901872,
+      "equal_opportunity_difference": 0.13157894736842102,
+      "false_positive_rate_difference": 0.16927899686520376
+    }
+  },
+  "metrics": {
+    "accuracy": 0.712,
+    "balanced_accuracy": 0.6953371970495258,
+    "brier_score": 0.21884417785856802,
+    "f1": 0.6326530612244898,
+    "precision": 0.6739130434782609,
+    "recall": 0.5961538461538461,
+    "roc_auc": 0.6970495258166491
+  },
+  "quality": {
+    "errors": [],
+    "row_count": 500,
+    "valid": true,
+    "warnings": []
+  },
+  "seed": 42
+}

@@ -26,6 +26,8 @@ python -m venv .venv
 # Windows: .venv\Scripts\activate
 pip install -e ".[dev]"
 python -m src.baseline --data data/synthetic/student_success.csv
+python -m src.data_quality --data data/synthetic/student_success.csv
+python -m src.report --data data/synthetic/student_success.csv --config configs/baseline.json
 pytest
 ```
 
@@ -33,6 +35,8 @@ The reproducible baseline notebook is
 [`notebooks/01_baseline_student_success.ipynb`](notebooks/01_baseline_student_success.ipynb).
 It predicts whether a student will persist to the next academic term and
 reports performance, calibration, and subgroup fairness metrics.
+The report command writes a deterministic JSON artifact to `reports/`; the
+configuration records the seed and decision threshold.
 
 ## Repository structure
 
