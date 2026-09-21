@@ -10,14 +10,16 @@ from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
-from .evaluation import classification_metrics, subgroup_metrics
 from .data_quality import assert_valid_student_data
+from .evaluation import classification_metrics, subgroup_metrics
 
 TARGET = "persisted_next_term"
 SENSITIVE_COLUMNS = ["first_generation", "financial_aid", "online_student", "age_band"]
 
 
-def train_baseline(data: pd.DataFrame, seed: int = 42) -> tuple[Pipeline, pd.DataFrame, dict[str, float]]:
+def train_baseline(
+    data: pd.DataFrame, seed: int = 42
+) -> tuple[Pipeline, pd.DataFrame, dict[str, float]]:
     """Fit the baseline and return it, test predictions, and metrics."""
     assert_valid_student_data(data)
     features = data.drop(columns=[TARGET, "student_id"])
@@ -56,7 +58,9 @@ def main() -> None:
     _, results, metrics = train_baseline(pd.read_csv(args.data), seed=args.seed)
     print(pd.Series(metrics).to_string())
     for column in SENSITIVE_COLUMNS:
-        print(f"\n{column}\n{subgroup_metrics(results, column, TARGET, 'prediction').to_string(index=False)}")
+        print(
+            f"\n{column}\n{subgroup_metrics(results, column, TARGET, 'prediction').to_string(index=False)}"
+        )
 
 
 if __name__ == "__main__":

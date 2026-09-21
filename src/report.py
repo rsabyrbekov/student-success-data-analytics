@@ -19,8 +19,13 @@ def generate_report(data_path: str | Path, output_dir: str | Path, seed: int = 4
     for column in SENSITIVE_COLUMNS:
         table = subgroup_metrics(results, column, TARGET, "prediction")
         fairness[column] = fairness_summary(table)
-    payload = {"data": str(data_path), "seed": seed, "quality": quality.as_dict(),
-               "metrics": metrics, "fairness": fairness}
+    payload = {
+        "data": str(data_path),
+        "seed": seed,
+        "quality": quality.as_dict(),
+        "metrics": metrics,
+        "fairness": fairness,
+    }
     destination = Path(output_dir)
     destination.mkdir(parents=True, exist_ok=True)
     path = destination / "evaluation_report.json"

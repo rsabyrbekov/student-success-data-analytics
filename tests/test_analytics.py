@@ -1,10 +1,10 @@
 import pandas as pd
 
 from src.baseline import train_baseline
-from src.evaluation import demographic_parity_difference, subgroup_metrics
 from src.data_quality import validate_student_data
-from src.report import generate_report
+from src.evaluation import demographic_parity_difference, subgroup_metrics
 from src.generate_data import generate_student_data
+from src.report import generate_report
 
 
 def test_generation_is_reproducible_and_well_formed():

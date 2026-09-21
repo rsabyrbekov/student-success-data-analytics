@@ -57,7 +57,9 @@ def subgroup_metrics(
 
 def demographic_parity_difference(metrics: pd.DataFrame) -> float:
     """Difference between the largest and smallest subgroup selection rates."""
-    return float(metrics["predicted_positive_rate"].max() - metrics["predicted_positive_rate"].min())
+    return float(
+        metrics["predicted_positive_rate"].max() - metrics["predicted_positive_rate"].min()
+    )
 
 
 def fairness_summary(metrics: pd.DataFrame) -> dict[str, float]:
