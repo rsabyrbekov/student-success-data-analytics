@@ -21,4 +21,6 @@ jobs:
       - run: python -m src.data_quality --data data/synthetic/student_success.csv
       - run: python -m src.report --data data/synthetic/student_success.csv --output-dir reports
       - run: python -m compileall -q src
+      - run: ruff check src tests
+      - run: python -c "import nbformat; nbformat.read('notebooks/01_baseline_student_success.ipynb', as_version=4)"
       - run: pytest

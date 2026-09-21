@@ -49,6 +49,10 @@ configuration records the seed and decision threshold.
 | `tests/` | Automated unit tests |
 | `.github/workflows/` | Continuous integration |
 
+Project governance and future work are documented in
+[`CONTRIBUTING.md`](CONTRIBUTING.md), [`SECURITY.md`](SECURITY.md), and
+[`ROADMAP.md`](ROADMAP.md).
+
 ## Responsible use
 
 This project is educational and exploratory. Model outputs must not be used
